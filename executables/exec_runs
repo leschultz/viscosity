@@ -1,0 +1,30 @@
+#!/bin/bash
+  
+# Programs
+PYTHON="python3"           # Python version installed (3 or above)
+MPI="mpirun"               # MPI
+LAMMPS="lmp_mpi"           # LAMMPS program
+THREADS=8                  # The number of threads
+
+# Files
+SCRIPTS_DIR="../scripts/"  # The directory for scripts
+COOL_NAME="cool.in"        # The name of the cooling input file
+VISC_NAME="visc.in"        # The name of the viscosity runs file
+
+# Runs
+RUN_DIR="../run/"          # The directory to store runs
+
+# Generate random seed
+echo ${RANDOM} > "../run/seed.txt"
+
+# Run cooling job
+${PYTHON} ${SCRIPTS_DIR}run_lammps.py\
+        "${RUN_DIR}"\
+        "${MPI} -n ${THREADS} ${LAMMPS}"\
+        "${COOL_NAME}"\
+
+# Run viscosity jobs
+${PYTHON} ${SCRIPTS_DIR}run_lammps.py\
+        "${RUN_DIR}"\
+        "${MPI} -n ${THREADS} ${LAMMPS}"\
+        "${VISC_NAME}"\
