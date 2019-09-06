@@ -28,6 +28,7 @@ for path in runs:
     subprocess.run(
                    program.split(' ')+['-in', runname],
                    cwd=path,
+                   stdout=open(os.devnull, 'wb')
                    )
 
     countnew += 1
